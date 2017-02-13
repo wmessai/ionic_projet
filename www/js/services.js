@@ -8,8 +8,8 @@ angular.module('app.services', [])
     refCategory = new Firebase("https://projet-ionic-30642.firebaseio.com/category"),
     refOrder = new Firebase("https://projet-ionic-30642.firebaseio.com/orders"),
     refFeatured = new Firebase("https://projet-ionic-30642.firebaseio.com/featured"),
-    refMenu = new Firebase("https://projet-ionic-30642.firebaseio.com/menu");
-	reftest = new Firebase("https://projet-ionic-30642.firebaseio.com/test");
+    reftest = new Firebase("https://projet-ionic-30642.firebaseio.com/test");
+	//reftest = new Firebase("https://projet-ionic-30642.firebaseio.com/test");
   return {
     ref: function() {
       return ref;
@@ -29,12 +29,10 @@ angular.module('app.services', [])
     refFeatured: function() {
       return refFeatured;
     },
-    refMenu: function() {
-      return refMenu;
-    },
     reftest: function() {
       return reftest;
     }
+    
   }
 })
 

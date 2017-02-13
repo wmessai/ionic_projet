@@ -99,15 +99,25 @@ angular.module('app.controllers', [])
             //Add name and default dp to the Autherisation table
             result.updateProfile({
               displayName: user.name,
-			  classe: user.classe,
-              photoURL: "default_dp"
+			  photoURL: "default_dp"
             }).then(function() {}, function(error) {});
 
             //Add phone number to the user table
-            fireBaseData.refUser().child(result.uid).set({
-              telephone: user.phone
+            //fireBaseData.refUser().child(result.uid).push({
+              //telephone: user.phone
 			  //classe: user.classe
-			  });
+			  
+			  //});
+			  
+			  fireBaseData.refUser().child(result.uid).set({    // set
+            classe: user.classe,
+			name:user.name,
+			email:user.email,
+			role:1,
+			telephone: user.phone
+			
+           });
+		   
 			   
              
             
@@ -120,8 +130,7 @@ angular.module('app.controllers', [])
             $ionicSideMenuDelegate.canDragContent(true);  // Sets up the sideMenu dragable
             $rootScope.extras = true;
             sharedUtils.hideLoading();
-			
-            $state.go('accueil', {}, {location: "replace"});
+			$state.go('accueil', {}, {location: "replace"});
 			
 
         }, function (error) {
@@ -143,7 +152,9 @@ angular.module('app.controllers', [])
   //Check if user already logged in
   firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
+	
       $scope.user_info=user; //Saves data to user_info
+	  
     }else {
 
       $ionicSideMenuDelegate.toggleLeft(); //To close the side bar
@@ -188,13 +199,7 @@ angular.module('app.controllers', [])
 
 })
 
-.controller('offersCtrl', function($scope,$rootScope) {
 
-    //We initialise it on all the Main Controllers because, $rootScope.extra has default value false
-    // So if you happen to refresh the Offer page, you will get $rootScope.extra = false
-    //We need $ionicSideMenuDelegate.canDragContent(true) only on the menu, ie after login page
-    $rootScope.extras=true;
-})
 
 .controller('indexCtrl', function($scope,$rootScope,sharedUtils,$ionicHistory,$state,$ionicSideMenuDelegate,sharedCartService) {
 
@@ -255,81 +260,25 @@ angular.module('app.controllers', [])
     }
 
   })
-
-.controller('myCartCtrl', function($scope,$rootScope,$state,sharedCartService) {
-
-    $rootScope.extras=true;
-
-    //Check if user already logged in
+.controller('quiz_1Ctrl', function($scope,$rootScope,sharedUtils,$ionicSideMenuDelegate,
+                                   $state,fireBaseData,$ionicHistory) {
+	
+	
+	//Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-
-        $scope.cart=sharedCartService.cart_items;  // Loads users cart
-
-        $scope.get_qty = function() {
-          $scope.total_qty=0;
-          $scope.total_amount=0;
-
-          for (var i = 0; i < sharedCartService.cart_items.length; i++) {
-            $scope.total_qty += sharedCartService.cart_items[i].item_qty;
-            $scope.total_amount += (sharedCartService.cart_items[i].item_qty * sharedCartService.cart_items[i].item_price);
-          }
-          return $scope.total_qty;
-        };
-      }
-      //We dont need the else part because indexCtrl takes care of it
-    });
-
-    $scope.removeFromCart=function(c_id){
-      sharedCartService.drop(c_id);
-    };
-
-    $scope.inc=function(c_id){
-      sharedCartService.increment(c_id);
-    };
-
-    $scope.dec=function(c_id){
-      sharedCartService.decrement(c_id);
-    };
-
-    $scope.checkout=function(){
-      $state.go('checkout', {}, {location: "replace"});
-    };
-
-
-
-})
-
-.controller('lastOrdersCtrl', function($scope,$rootScope,fireBaseData,sharedUtils) {
-
-    $rootScope.extras = true;
-    sharedUtils.showLoading();
-
-    //Check if user already logged in
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        $scope.user_info = user;
-
-        fireBaseData.refOrder()
-          .orderByChild('user_id')
-          .startAt($scope.user_info.uid).endAt($scope.user_info.uid)
-          .once('value', function (snapshot) {
-            $scope.orders = snapshot.val();
-            $scope.$apply();
-          });
-          sharedUtils.hideLoading();
+        $scope.ajouter_test = function (formName, test){
+		//alert(test.contenu)
+		//Main Firebase Authentication part
+		fireBaseData.reftest().push({    // set
+            contenu:test.contenu
+			
+           });
+		   }
       }
     });
 
-
-
-
-
-})
-
-.controller('favouriteCtrl', function($scope,$rootScope) {
-
-    $rootScope.extras=true;
+    
 })
 
 .controller('settingsCtrl', function($scope,$rootScope,fireBaseData,$firebaseObject,
@@ -337,14 +286,14 @@ angular.module('app.controllers', [])
                                      sharedUtils) {
     //Bugs are most prevailing here
     $rootScope.extras=true;
-
+	
     //Shows loading bar
     sharedUtils.showLoading();
 
     //Check if user already logged in
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
-
+            
         //Accessing an array of objects using firebaseObject, does not give you the $id , so use firebase array to get $id
         $scope.addresses= $firebaseArray(fireBaseData.refUser().child(user.uid).child("address"));
 

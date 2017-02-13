@@ -28,7 +28,7 @@ angular.module('app.routes', [])
   .state('tabsController.accueil', {
       url: '/accueil',
       templateUrl: 'templates/accueil.html',
-      //controller: 'accueilCtrl'
+      controller: 'accueilCtrl'
     })
   
 
@@ -50,12 +50,58 @@ angular.module('app.routes', [])
 	.state('test', {
       url: '/test',
       templateUrl: 'templates/test.html',
-      //controller: 'accueilCtrl'
+      //controller: 'testCtrl'
     })
+	.state('quiz_1', {
+      url: '/Quiz 1',
+      templateUrl: 'templates/quiz_1.html',
+      controller: 'quiz_1Ctrl'
+    })
+	.state('quiz_2', {
+      url: '/Quiz 2',
+      templateUrl: 'templates/quiz_2.html',
+      //controller: 'quiz_3Ctrl'
+    })
+	.state('quiz_3', {
+      url: '/Quiz 3',
+      templateUrl: 'templates/quiz_3.html',
+      //controller: 'quiz_3Ctrl'
+    })
+	.state('quiz_4', {
+      url: '/Quiz 4',
+      templateUrl: 'templates/quiz_4.html',
+      //controller: 'quiz_4Ctrl'
+    })
+	
 	.state('text_video', {
       url: '/text_video',
       templateUrl: 'templates/text_video.html',
       //controller: 'accueilCtrl'
+    })
+	.state('t_v_atelier1', {
+      url: '/textes et vidéos atelier1',
+      templateUrl: 'templates/t_v_atelier1.html',
+      //controller: 't_v_atelier1Ctrl'
+    })
+	.state('t_v_atelier2', {
+      url: '/textes et vidéos atelier2',
+      templateUrl: 'templates/t_v_atelier2.html',
+      //controller: 't_v_atelier1Ctrl'
+    })
+	.state('t_v_atelier3', {
+      url: '/textes et vidéos atelier3',
+      templateUrl: 'templates/t_v_atelier3.html',
+      //controller: 't_v_atelier1Ctrl'
+    })
+	.state('t_v_atelier4', {
+      url: '/textes et vidéos atelier4',
+      templateUrl: 'templates/t_v_atelier4.html',
+      //controller: 't_v_atelier1Ctrl'
+    })
+	.state('note', {
+      url: '/Mes notes',
+      templateUrl: 'templates/note.html',
+      //controller: 't_v_atelier1Ctrl'
     })
 
 
